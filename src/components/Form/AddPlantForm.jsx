@@ -120,7 +120,6 @@ const AddPlantForm = ({
               type="submit"
               className="w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-lime-500 "
             >
-              Save & Continue
               {loading ? (
                 <TbFidgetSpinner className="animate-spin m-auto" />
               ) : (
