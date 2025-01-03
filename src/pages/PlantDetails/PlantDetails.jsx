@@ -40,24 +40,20 @@ const PlantDetails = () => {
   return (
     <Container>
       <Helmet>
-        <title>Money Plant</title>
+        <title>{name}</title>
       </Helmet>
       <div className="mx-auto flex flex-col lg:flex-row justify-between w-full gap-12">
         {/* Header */}
         <div className="flex flex-col gap-6 flex-1">
           <div>
             <div className="w-full overflow-hidden rounded-xl">
-              <img
-                className="object-cover w-full"
-                src={image}
-                alt="header image"
-              />
+              <img className="object-cover w-full" src={image} alt={name} />
             </div>
           </div>
         </div>
         <div className="md:gap-10 flex-1">
           {/* Plant Info */}
-          <Heading title={"Money Plant"} subtitle={`Category: ${category}`} />
+          <Heading title={name} subtitle={`Category: ${category}`} />
           <hr className="my-6" />
           <div
             className="
@@ -112,7 +108,11 @@ const PlantDetails = () => {
           </div>
           <hr className="my-6" />
 
-          <PurchaseModal closeModal={closeModal} isOpen={isOpen} />
+          <PurchaseModal
+            plant={plant}
+            closeModal={closeModal}
+            isOpen={isOpen}
+          />
 
           <div className="md:col-span-3 order-first md:order-last mb-10">
             {/* RoomReservation */}
