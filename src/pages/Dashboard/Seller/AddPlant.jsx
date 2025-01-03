@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { imageUpload } from "../../../api/utils";
 import AddPlantForm from "../../../components/Form/AddPlantForm";
@@ -5,10 +6,13 @@ import useAuth from "../../../hooks/useAuth";
 
 const AddPlant = () => {
   const { user } = useAuth();
-  //handle form submit
+  const [loading, setLoading] = useState(false);
+  const [uploadBtnText, setUploadBtnText] = useState({ name: "Upload image" });
 
+  //handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const form = e.target;
     const name = form.name.value;
     const description = form.description.value;
@@ -19,14 +23,14 @@ const AddPlant = () => {
     const image = form.image.files[0];
     const imageUrl = await imageUpload(image);
 
-      // seller info
-      const seller = {
-        name: user?.displayName,
-        image: user?.photoURL,
-        email: user?.email,
-      }
+    // seller info
+    const seller = {
+      name: user?.displayName,
+      image: user?.photoURL,
+      email: user?.email,
+    };
 
-      // Create plant data object
+    // Create plant data object
     const plantData = {
       name,
       category,
@@ -35,8 +39,10 @@ const AddPlant = () => {
       quantity,
       image: imageUrl,
       seller,
-    }
-    console.table(plantData)
+    };
+    console.table(plantData);
+
+    //save plant in db
   };
   return (
     <div>
@@ -45,7 +51,12 @@ const AddPlant = () => {
       </Helmet>
 
       {/* Form */}
-      <AddPlantForm handleSubmit={handleSubmit} />
+      <AddPlantForm
+        handleSubmit={handleSubmit}
+        uploadBtnText={uploadBtnText}
+        setUploadBtnText={setUploadBtnText}
+        loading={loading}
+      />
     </div>
   );
 };
