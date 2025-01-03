@@ -3,8 +3,8 @@ import { TbFidgetSpinner } from "react-icons/tb";
 
 const AddPlantForm = ({
   handleSubmit,
-  uploadBtnText,
-  setUploadBtnText,
+  uploadImage,
+  setUploadImage,
   loading,
 }) => {
   return (
@@ -96,7 +96,12 @@ const AddPlantForm = ({
                 <div className="flex flex-col w-max mx-auto text-center">
                   <label>
                     <input
-                      onChange={(e) => setUploadBtnText(e.target.files[0])}
+                      onChange={(e) =>
+                        setUploadImage({
+                          image: e.target.files[0],
+                          url: URL.createObjectURL(e.target.files[0]),
+                        })
+                      }
                       className="text-sm cursor-pointer w-36 hidden"
                       type="file"
                       name="image"
@@ -105,14 +110,17 @@ const AddPlantForm = ({
                       hidden
                     />
                     <div className="bg-lime-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-lime-500">
-                      {uploadBtnText.name}
+                      {uploadImage?.image?.name}
                     </div>
                   </label>
                 </div>
               </div>
             </div>
-            {uploadBtnText.size && (
-              <p>Image Size: {uploadBtnText.size / 1024} Bytes</p>
+            {uploadImage && uploadImage?.image?.size && (
+              <div className="flex items-center gap-5">
+                <img className="w-20" src={uploadImage?.url} alt="" />
+                <p>Image Size: {uploadImage?.image?.size / 1024} Bytes</p>
+              </div>
             )}
 
             {/* Submit Button */}
