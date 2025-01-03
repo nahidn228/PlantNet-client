@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { imageUpload } from "../../../api/utils";
 import AddPlantForm from "../../../components/Form/AddPlantForm";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AddPlant = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
@@ -52,6 +54,7 @@ const AddPlant = () => {
       // post request
       await axiosSecure.post("/plants", plantData);
       toast.success("Data Added successfully !");
+      navigate("/dashboard/my-inventory");
     } catch (error) {
       console.log(error);
     } finally {
