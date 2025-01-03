@@ -43,6 +43,11 @@ const AddPlant = () => {
     console.table(plantData);
 
     //save plant in db
+    try {
+      //
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div>
