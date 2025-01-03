@@ -12,13 +12,13 @@ import useAuth from "../../hooks/useAuth";
 import Button from "../Shared/Button/Button";
 
 const PurchaseModal = ({ closeModal, isOpen, plant }) => {
+  const { category, price, name, quantity } = plant || {};
   const { user } = useAuth();
   const [totalQuantity, setTotalQuantity] = useState(1);
-  const { category, price, name, quantity } = plant || {};
+  const [totalPrice, setTotalPrice] = useState(price);
 
   // Total Price Calculation
 
-  console.log(totalQuantity);
   const handleQuantity = (value) => {
     if (value > quantity) {
       setTotalQuantity(quantity);
@@ -29,6 +29,7 @@ const PurchaseModal = ({ closeModal, isOpen, plant }) => {
       return toast.error("Quantity cannot be less then 1 ");
     }
     setTotalQuantity(value);
+    setTotalPrice(price * value);
   };
 
   return (
@@ -95,7 +96,7 @@ const PurchaseModal = ({ closeModal, isOpen, plant }) => {
                     name="quantity"
                     id="quantity"
                     value={totalQuantity}
-                    onChange={(e) => handleQuantity(e.target.value)}
+                    onChange={(e) => handleQuantity(parseInt(e.target.value))}
                     type="number"
                     placeholder="Available quantity"
                     required
@@ -119,7 +120,7 @@ const PurchaseModal = ({ closeModal, isOpen, plant }) => {
                 </div>
 
                 <div className="mt-2">
-                  <Button label={"Purchase"} />
+                  <Button label={`Pay ${totalPrice}$`} />
                 </div>
               </DialogPanel>
             </TransitionChild>
